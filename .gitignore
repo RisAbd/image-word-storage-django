@@ -2,3 +2,6 @@
 *.pyc
 *__pycache__*
 .env
+.idea/
+db.sqlite3
+resources/db.sqlite3
