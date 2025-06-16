@@ -30,6 +30,9 @@ ALLOWED_HOSTS = []
 
 RESOURCES_DIR = BASE_DIR / 'resources'
 
+# todo: is it ok?
+RESOURCES_DIR.mkdir(parents=True, exist_ok=True)
+
 
 # Application definition
 
@@ -40,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'image_word.apps.ImageWordConfig',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +128,28 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = RESOURCES_DIR / 'media'
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'loggers': {
+        'django.db.backends': dict(level='DEBUG', handlers=['console']),
+        'image_word': dict(level='DEBUG', handlers=['console']),
+    }
+}

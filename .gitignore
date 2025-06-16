@@ -4,4 +4,4 @@
 .env
 .idea/
 db.sqlite3
-resources/db.sqlite3
+resources/
