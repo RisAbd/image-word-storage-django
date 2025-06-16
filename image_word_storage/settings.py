@@ -28,6 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+RESOURCES_DIR = BASE_DIR / 'resources'
+
 
 # Application definition
 
@@ -76,7 +78,7 @@ WSGI_APPLICATION = 'image_word_storage.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': RESOURCES_DIR / 'db.sqlite3',
     }
 }
 
