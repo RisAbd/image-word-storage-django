@@ -1,3 +1,4 @@
+from pathlib import Path
 
 from django.db import models
 
@@ -16,12 +17,16 @@ class Image(BaseModel):
     name = models.CharField(max_length=128, blank=True)
     file = models.ImageField(upload_to=image_upload_to)
 
+    @property
+    def filename(self):
+        return Path(self.file.name).stem
+
     def __str__(self):
-        return f'{self.name!r} <{self.file}>'
+        return self.name
 
 
 class AlternativeImage(BaseModel):
-    main_image = models.ForeignKey(Image, on_delete=models.CASCADE)
+    main_image = models.ForeignKey(Image, on_delete=models.CASCADE, related_name='alt_imgs')
     file = models.ImageField(upload_to=alt_image_upload_to)
 
     def __str__(self):

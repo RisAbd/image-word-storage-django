@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-h)(3#ivzed)*s06--ki&!ol6^&%(0ke%kux9+=0bkd$u-*m(je
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 RESOURCES_DIR = BASE_DIR / 'resources'

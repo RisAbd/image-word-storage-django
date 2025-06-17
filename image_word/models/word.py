@@ -5,7 +5,7 @@ from image_word_storage.models import BaseModel
 
 
 class Language(BaseModel):
-
+    code = models.CharField(max_length=10, blank=False, null=True)
     name = models.CharField(max_length=128, blank=False)
 
     def __str__(self):
@@ -14,7 +14,7 @@ class Language(BaseModel):
 
 class Word(BaseModel):
     language = models.ForeignKey(Language, on_delete=models.PROTECT)
-    image = models.ForeignKey('Image', on_delete=models.CASCADE)
+    image = models.ForeignKey('Image', on_delete=models.CASCADE, related_name='words')
     text = models.CharField(max_length=32, blank=False)
 
     def __str__(self):

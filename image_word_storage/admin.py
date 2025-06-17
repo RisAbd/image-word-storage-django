@@ -8,8 +8,6 @@ class BaseModelAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         obj.added_by = request.user
-        if not obj.name:
-            obj.name = obj.filename
         return super().save_model(request, obj, form, change)
 
     def save_formset(self, request, form, formset, change):
