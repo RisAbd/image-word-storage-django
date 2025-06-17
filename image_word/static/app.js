@@ -37,10 +37,15 @@ async function main() {
   const wordContainer = document.getElementById('word');
   const grid = document.getElementById('grid');
 
+  const IGNORE_CHARS = [' ', '-'];
+
   // Создаём буквы
   [...wordText].forEach(char => {
     const letter = document.createElement('div');
     letter.classList.add('letter');
+    if (IGNORE_CHARS.includes(char)) {
+      letter.classList.add('ignore');
+    }
     letter.textContent = char;
     wordContainer.appendChild(letter);
   });
@@ -86,12 +91,11 @@ async function main() {
   }
 
   wordContainer.onclick = function onLetterClick(e) {
-    console.log(e.target);
     if (!e.target.classList.contains('letter')) {
       return;
     }
-    const idx = Array.from(wordContainer.children).indexOf(cell);
     const letter = e.target;
+    const idx = Array.from(wordContainer.children).indexOf(letter);
     console.log("Буква:", letter.textContent); 
     letterIndex = idx;
     updateSelection();
@@ -184,10 +188,20 @@ async function main() {
       const letterMoveLeft = buttons[4] && !prevButtons[4];
       const letterMoveRight = buttons[5] && !prevButtons[5];
 
+      function moveLetterInDirection(step) {
+        const stepNext = () => Math.min(wordText.length-1, Math.max(0, letterIndex + step));
+        let next, char;
+        do {
+            next = stepNext();
+            char = wordText[next];
+            letterIndex = next;
+        } while (IGNORE_CHARS.includes(char) || next !== letterIndex);
+      }
+
       if (letterMoveLeft == letterMoveRight) {
       } else {
-        if (letterMoveLeft)  letterIndex = Math.max(0, letterIndex - 1);
-        if (letterMoveRight) letterIndex = Math.min(wordText.length - 1, letterIndex + 1);
+        if (letterMoveLeft) moveLetterInDirection(-1);
+        if (letterMoveRight) moveLetterInDirection(1);
       }
 
 

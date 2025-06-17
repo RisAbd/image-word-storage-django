@@ -22,21 +22,28 @@ body {
 }
 
 .letter {
-  width: 5rem;
-  height: 5rem;
+  width: 4rem;
+  height: 4rem;
   background: #555;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 4rem;
+  font-size: 3rem;
   border-radius: 8px;
   transition: background 0.2s;
   text-transform: capitalize;
+  user-select: none;
 }
 
 .letter.selected {
   background: #2a9d8f;
   outline: 3px solid #e9c46a;
+}
+
+.letter.ignore {
+  opacity: 0%;
+  pointer-events: none;
+  width: 2rem;
 }
 
 .grid {
