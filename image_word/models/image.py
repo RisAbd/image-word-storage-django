@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from django.db import models
+from thumbnails.fields import ImageField
 
 from image_word_storage.models import BaseModel
 
@@ -15,7 +16,7 @@ def alt_image_upload_to(instance, filename):
 
 class Image(BaseModel):
     name = models.CharField(max_length=128, blank=True)
-    file = models.ImageField(upload_to=image_upload_to)
+    file = ImageField(upload_to=image_upload_to)
 
     @property
     def filename(self):
@@ -27,7 +28,7 @@ class Image(BaseModel):
 
 class AlternativeImage(BaseModel):
     main_image = models.ForeignKey(Image, on_delete=models.CASCADE, related_name='alt_imgs')
-    file = models.ImageField(upload_to=alt_image_upload_to)
+    file = ImageField(upload_to=alt_image_upload_to)
 
     def __str__(self):
         return f'{self.main_image} / alt_img: <{self.file}>'

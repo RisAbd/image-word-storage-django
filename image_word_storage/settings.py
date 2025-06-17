@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'thumbnails',
     'image_word.apps.ImageWordConfig',
 ]
 
@@ -151,5 +152,57 @@ LOGGING = {
     'loggers': {
         'django.db.backends': dict(level='DEBUG', handlers=['console']),
         'image_word': dict(level='DEBUG', handlers=['console']),
+    }
+}
+
+
+THUMBNAILS = {
+    'METADATA': {
+        'BACKEND': 'thumbnails.backends.metadata.DatabaseBackend',
+    },
+    'STORAGE': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+        # You can also use Amazon S3 or any other Django storage backends
+    },
+    'SIZES': {
+        'tiny': {
+            'PROCESSORS': [
+                {'PATH': 'thumbnails.processors.resize', 'width': 100, 'height': 100},
+                # {'PATH': 'thumbnails.processors.crop', 'width': 80, 'height': 80}
+            ],
+            'POST_PROCESSORS': [
+                {
+                    'PATH': 'thumbnails.post_processors.optimize',
+                    'png_command': 'optipng -force -o7 "%(filename)s"',
+                    'jpg_command': 'jpegoptim -f --strip-all "%(filename)s"',
+                },
+            ],
+        },
+        'small': {
+            'PROCESSORS': [
+                {'PATH': 'thumbnails.processors.resize', 'width': 300, 'height': 300},
+                # {'PATH': 'thumbnails.processors.crop', 'width': 80, 'height': 80}
+            ],
+            'POST_PROCESSORS': [
+                {
+                    'PATH': 'thumbnails.post_processors.optimize',
+                    'png_command': 'optipng -force -o7 "%(filename)s"',
+                    'jpg_command': 'jpegoptim -f --strip-all "%(filename)s"',
+                },
+            ],
+        },
+        'medium': {
+            'PROCESSORS': [
+                {'PATH': 'thumbnails.processors.resize', 'width': 500, 'height': 500},
+                # {'PATH': 'thumbnails.processors.crop', 'width': 80, 'height': 80}
+            ],
+            'POST_PROCESSORS': [
+                {
+                    'PATH': 'thumbnails.post_processors.optimize',
+                    'png_command': 'optipng -force -o7 "%(filename)s"',
+                    'jpg_command': 'jpegoptim -f --strip-all "%(filename)s"',
+                },
+            ],
+        },
     }
 }

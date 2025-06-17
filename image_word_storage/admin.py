@@ -6,6 +6,9 @@ from image_word_storage.models import BaseModel
 class BaseModelAdmin(admin.ModelAdmin):
     list_display = '__str__ created_at added_by'.split()
 
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related('added_by')
+
     def save_model(self, request, obj, form, change):
         obj.added_by = request.user
         return super().save_model(request, obj, form, change)

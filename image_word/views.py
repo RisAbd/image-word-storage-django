@@ -39,10 +39,12 @@ def random(request, width, height):
             dict(text=w.text,
                  id=w.id,
                  lang=w.language.code,
-                 img=dict(url=w.image.file.url,
+                 img=dict(url=w.image.file.thumbnails.small.url,
                           id=w.image.id,
                           alts=[
-                              dict(url=aw.file.url, id=aw.id)
+                              dict(url=aw.file.thumbnails.small.url,
+                                   id=aw.id,
+                                   )
                               for aw in w.image.alt_imgs.all()
                           ])
                  )

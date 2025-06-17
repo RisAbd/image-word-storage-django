@@ -46,3 +46,6 @@ class WordAdmin(BaseModelAdmin):
     list_display = 'text language image created_at added_by'.split()
     list_display_links = 'language image'.split()
     list_filter = 'language'.split()
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related('image', 'language')
